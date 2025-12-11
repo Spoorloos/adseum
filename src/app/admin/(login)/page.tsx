@@ -60,7 +60,6 @@ export default async function AdminLogin() {
 
     return (
         <main className="h-full flex flex-col justify-center items-center">
-            <h1 className="text-3xl font-bold mb-4">Login</h1>
             <LoginForm action={loginAction}/>
         </main>
     )

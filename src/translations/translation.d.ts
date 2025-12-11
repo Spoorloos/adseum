@@ -1,6 +1,11 @@
 export type Translation = {
     name: string;
-    homePage: {
-        title: string;
+    admin: {
+        logIn: {
+            heading: string;
+            email: string;
+            password: string;
+            action: string;
+        }
     }
 };
