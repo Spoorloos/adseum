@@ -1,7 +1,11 @@
-export default function Page() {
+import { getTranslations } from "@/lib/localization"
+
+export default async function Page() {
+    const translations = await getTranslations();
+
     return (
         <main className="p-4">
-            <p>Admin page</p>
+            <p>{translations.admin.page.text}</p>
         </main>
     )
 }

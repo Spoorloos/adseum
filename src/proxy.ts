@@ -10,7 +10,7 @@ import {
 } from "@/lib/auth";
 
 const localeRegex = new RegExp(`^\/(${localeCodes.join("|")})(\/.*)?$`);
-const authRegex = /^\/admin(\/.*)?$/;
+const authRegex = new RegExp(`^\/(${localeCodes.join("|")})\/admin(\/.*)?$`);
 
 async function localizationProxy(request: NextRequest) {
     const pathName = request.nextUrl.pathname;
@@ -23,25 +23,25 @@ async function localizationProxy(request: NextRequest) {
         return NextResponse.redirect(
             new URL(`/${localeCode}${pathName}`, request.url)
         );
-    } else {
-        // Otherwise rewrite the url to strip the locale away
-        const [, localeCode, path] = matchResult;
-        const response = NextResponse.rewrite(
-            new URL(path ?? "/", request.url)
-        );
-
-        // And save the locale in a cookie
-        response.cookies.set("locale", localeCode);
-        return response;
     }
+
+    // Rewrite the url to strip the locale away
+    const [, localeCode, path] = matchResult;
+    const response = NextResponse.rewrite(
+        new URL(path ?? "/", request.url)
+    );
+
+    // And save the locale in a cookie
+    response.cookies.set("locale", localeCode);
+    return response;
 }
 
 async function authProxy(response: NextResponse, request: NextRequest) {
     const accessToken = request.cookies.get("accessToken")?.value;
     const refreshToken = request.cookies.get("refreshToken")?.value;
 
-    if (!refreshToken || !decodeAccessToken(accessToken)) {
-        return; // Invalid refresh/access token
+    if (!refreshToken || decodeAccessToken(accessToken)) {
+        return; // No refresh token or access token still valid
     }
 
     const session = await prisma.session.findUnique({

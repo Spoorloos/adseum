@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { Trash } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { getTranslations } from "@/lib/localization";
 
 const registerSchema = z.object({
     email: z.email({ error: "Invalid email format" })
@@ -54,18 +55,19 @@ async function deleteUserAction(userId: string) {
 export default async function UsersPage() {
     const users = await prisma.user.findMany();
     const currentUser = await getUser();
+    const translations = await getTranslations();
 
     return (
         <main className="p-4 space-y-4">
-            <h1 className="text-3xl font-bold">Users</h1>
+            <h1 className="text-3xl font-bold">{translations.admin.users.title}</h1>
             <div className="space-x-4">
                 <CreateUserModal action={createUserAction}/>
             </div>
             <CustomTable
                 columns={[
-                    { key: "id", name: "ID" },
-                    { key: "email", name: "Email" },
-                    { key: "createdAt", name: "Created at" },
+                    { key: "id", name: translations.admin.users.table.id },
+                    { key: "email", name: translations.admin.users.table.email },
+                    { key: "createdAt", name: translations.admin.users.table.createdAt },
                     { key: "controls", name: "" },
                 ]}
                 rows={
