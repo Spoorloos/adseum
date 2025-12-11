@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 import { Trash } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { redirect } from "next/navigation";
 
 const registerSchema = z.object({
     email: z.email({ error: "Invalid email format" })

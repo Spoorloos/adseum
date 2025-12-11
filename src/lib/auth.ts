@@ -9,6 +9,9 @@ import jwt from "jsonwebtoken";
 
 export type JwtPayload = { userId: string };
 
+export const ACCESS_TOKEN_EXPIRE = 1 * 60 * 15; // 15 minutes
+export const REFRESH_TOKEN_EXPIRE = 1 * 60 * 60 * 24 * 7; // 7 days
+
 export function decodeAccessToken(accessToken: string | undefined) {
     if (accessToken === undefined) return null;
 

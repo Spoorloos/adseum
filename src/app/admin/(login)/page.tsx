@@ -1,8 +1,14 @@
-import { createSession, findUser, isLoggedIn } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import LoginForm from "@/components/LoginForm";
 import { z } from "zod";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import {
+    ACCESS_TOKEN_EXPIRE,
+    REFRESH_TOKEN_EXPIRE,
+    createSession,
+    findUser,
+    isLoggedIn
+} from "@/lib/auth";
 
 const loginSchema = z.object({
     email: z.email().toLowerCase(),
@@ -25,14 +31,14 @@ async function loginAction(_: string | undefined, formData: FormData) {
             cookie.set("accessToken", session.accessToken, {
                 secure: process.env.NODE_ENV === "production",
                 httpOnly: true,
-                maxAge: 1 * 60 * 15,
+                maxAge: ACCESS_TOKEN_EXPIRE,
                 sameSite: "strict",
             });
 
             cookie.set("refreshToken", session.refreshToken, {
                 secure: process.env.NODE_ENV === "production",
                 httpOnly: true,
-                maxAge: 1 * 60 * 60 * 24 * 7,
+                maxAge: REFRESH_TOKEN_EXPIRE,
                 sameSite: "strict",
             });
 

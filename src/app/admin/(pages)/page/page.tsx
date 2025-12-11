@@ -2,52 +2,6 @@ export default function Page() {
     return (
         <main className="p-4">
             <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
-            <p>Admin page</p>
         </main>
     )
 }
