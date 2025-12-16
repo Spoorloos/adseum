@@ -7,7 +7,7 @@ export const defaultLocale: Locale = "en";
 
 type Locale = (typeof localeCodes)[number];
 
-function isValidLocale(data: string): data is Locale {
+export function isValidLocale(data: string): data is Locale {
     return localeCodes.includes(data as any);
 }
 

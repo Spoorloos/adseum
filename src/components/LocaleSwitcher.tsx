@@ -26,9 +26,9 @@ export default function LocaleSwitcher({ localeCodes }: { localeCodes: string[] 
                 <ul className="absolute top-full left-0 w-full max-h-32 overflow-y-auto">
                     {localeCodes.map((code) => (
                         <li key={code}>
-                            <a className="block p-1 uppercase bg-blue-500 hover:bg-blue-600" href={`/${code}${pathName}`}>
+                            <Link className="block p-1 uppercase bg-blue-500 hover:bg-blue-600" href={`/${code}${pathName}`}>
                                 {code}
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>

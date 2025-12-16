@@ -10,7 +10,6 @@ import {
 } from "@/lib/auth";
 
 const localeRegex = new RegExp(`^\/(${localeCodes.join("|")})(\/.*)?$`);
-const authRegex = new RegExp(`^\/(${localeCodes.join("|")})\/admin(\/.*)?$`);
 
 async function localizationProxy(request: NextRequest) {
     const pathName = request.nextUrl.pathname;
@@ -25,14 +24,10 @@ async function localizationProxy(request: NextRequest) {
         );
     }
 
-    // Rewrite the url to strip the locale away
-    const [, localeCode, path] = matchResult;
-    const response = NextResponse.rewrite(
-        new URL(path ?? "/", request.url)
-    );
-
-    // And save the locale in a cookie
+    const response = NextResponse.next();
+    const [, localeCode] = matchResult;
     response.cookies.set("locale", localeCode);
+
     return response;
 }
 
@@ -75,11 +70,8 @@ async function authProxy(response: NextResponse, request: NextRequest) {
 
 export async function proxy(request: NextRequest) {
     const response = await localizationProxy(request);
-    const pathName = request.nextUrl.pathname;
 
-    if (authRegex.test(pathName)) {
-        await authProxy(response, request);
-    }
+    await authProxy(response, request);
 
     return response;
 }
