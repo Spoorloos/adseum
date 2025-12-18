@@ -1,5 +1,6 @@
 import "./globals.css";
 import { type Metadata } from "next";
+import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import TranslationProvider from "@/components/TranslationProvider";
 import { getLocaleCode, getTranslations } from "@/lib/localization";
@@ -9,6 +10,11 @@ export const metadata: Metadata = {
     description: "",
 };
 
+const inter = Inter({
+    subsets: ["latin"],
+    variable: "--font-inter",
+});
+
 export default async function RootLayout({ children }: React.PropsWithChildren) {
     const localeCode = await getLocaleCode();
     const translations = await getTranslations(localeCode);
@@ -16,7 +22,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
     return (
         <html lang={localeCode}>
             <TranslationProvider localeCode={localeCode} translations={translations}>
-                <body className="h-screen flex flex-col">
+                <body className={`h-screen flex flex-col font-inter ${inter.variable}`}>
                     <Header/>
                     <div className="grow overflow-y-auto">
                         {children}

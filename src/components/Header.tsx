@@ -1,10 +1,16 @@
 import Link from "next/link";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
-import { localeCodes } from "@/lib/localization";
 import { getUser } from "@/lib/auth";
+import { getTranslations, localeCodes } from "@/lib/localization";
 
 export default async function Header() {
     const user = await getUser();
+
+    const locales = Object.fromEntries(
+        await Promise.all(localeCodes.map(
+            async (code) => [ code, (await getTranslations(code)).name ]
+        ))
+    );
 
     return (
         <header className="bg-black text-white flex justify-between items-center p-4">
@@ -17,7 +23,7 @@ export default async function Header() {
                         <Link className="block p-2 bg-yellow-500" href="/admin">Admin</Link>
                     )}
                 </nav>
-                <LocaleSwitcher localeCodes={localeCodes as unknown as string[]} />
+                <LocaleSwitcher locales={locales} />
             </div>
         </header>
     )

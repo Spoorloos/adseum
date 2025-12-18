@@ -1,9 +1,9 @@
-import CreateUserModal from "@/components/CreateUserModal";
-import EditUserModal from "@/components/EditUserModal";
+import CreateUserModal from "@/components/modals/CreateUserModal";
+import DeleteUserModal from "@/components/modals/DeleteUserModal";
+import EditUserModal from "@/components/modals/EditUserModal";
 import CustomTable from "@/components/CustomTable";
 import { createUser, deleteUser, getUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Trash } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getTranslations } from "@/lib/localization";
@@ -77,15 +77,8 @@ export default async function UsersPage() {
                         createdAt: user.createdAt.toLocaleString(),
                         controls: (
                             <div className="flex gap-2">
-                                <button
-                                    className="block cursor-pointer text-red-500 hover:text-red-500/50"
-                                    aria-label="Delete user"
-                                    onClick={deleteUserAction.bind(undefined, user.id)}
-                                >
-                                    <Trash className="size-6"/>
-                                </button>
-
-                                <EditUserModal email={currentUser?.email ?? ""}/>
+                                <DeleteUserModal action={deleteUserAction.bind(undefined, user.id)} />
+                                {/*<EditUserModal email={currentUser?.email ?? ""} />*/}
                             </div>
                         )
                     }))

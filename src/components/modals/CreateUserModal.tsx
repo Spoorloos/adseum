@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useActionState, type FormEvent } from "react";
-import { X, LoaderCircle } from "lucide-react";
-import { useTranslations } from "./TranslationProvider";
+import { LoaderCircle } from "lucide-react";
+import { useTranslations } from "../TranslationProvider";
+import Modal from "@/components/modals/Modal";
 
 type CreateUserModalProps = {
     action: (state: string | undefined, formData: FormData) => Promise<string | undefined>;
@@ -39,14 +40,11 @@ export default function CreateUserModal({ action }: CreateUserModalProps) {
                 {translations.admin.users.createUser.button}
             </button>
 
-            {open && (
-                <section className="fixed top-1/2 left-1/2 -translate-1/2 border border-zinc-200 p-4 bg-white shadow-xs flex flex-col gap-2 w-full max-w-sm">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-bold">{translations.admin.users.createUser.title}</h2>
-                        <button className="cursor-pointer" onClick={() => setOpen(false)}>
-                            <X className="size-8"/>
-                        </button>
-                    </div>
+            <Modal
+                open={open}
+                setOpen={setOpen}
+                header={translations.admin.users.createUser.title}
+                body={(
                     <form className="contents" onSubmit={onFormSubmit}>
                         <div>
                             <label htmlFor="email-field">{translations.admin.users.createUser.email}</label>
@@ -76,8 +74,8 @@ export default function CreateUserModal({ action }: CreateUserModalProps) {
                             <strong className="text-red-500 font-bold">{error}</strong>
                         )}
                     </form>
-                </section>
-            )}
+                )}
+            />
         </>
     )
 }

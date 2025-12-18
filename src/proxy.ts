@@ -26,6 +26,7 @@ async function localizationProxy(request: NextRequest) {
 
     const response = NextResponse.next();
     const [, localeCode] = matchResult;
+
     response.cookies.set("locale", localeCode);
 
     return response;
@@ -77,5 +78,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-    matcher: "/((?!api|_next/static|_next/image|.*\\.png|favicon.ico$).*)",
+    matcher: "/((?!api|_next/static|_next/image|.*\\.png|favicon.ico).*)",
 };

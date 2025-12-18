@@ -1,38 +1,34 @@
 "use client";
 
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useTranslations } from "@/components/TranslationProvider";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "./TranslationProvider";
 import Link from "next/link";
 
-const stripLocaleRegex = /^\/[^\/]+/;
+type LocaleSwitcherProps = {
+    locales: Record<string, string>;
+}
 
-export default function LocaleSwitcher({ localeCodes }: { localeCodes: string[] }) {
-    const { localeCode } = useTranslations();
-    const [open, setOpen] = useState(false);
-    const pathName = usePathname().replace(stripLocaleRegex, "");
+export default function LocaleSwitcher({ locales }: LocaleSwitcherProps) {
+    const { localeCode, translations } = useTranslations();
+    const pathName = usePathname().replace(`/${localeCode}`, "");
 
     return (
-        <div className="relative">
-            <button
-                className="bg-red-500 p-2 flex gap-1 items-center cursor-pointer uppercase"
-                onClick={() => setOpen(x => !x)}
-            >
-                {localeCode}
+        <div className="relative group">
+            <button className="bg-red-500 p-2 flex gap-1 items-center cursor-pointer">
+                {translations.name}
                 <ChevronDown/>
             </button>
-            {open && (
-                <ul className="absolute top-full left-0 w-full max-h-32 overflow-y-auto">
-                    {localeCodes.map((code) => (
-                        <li key={code}>
-                            <Link className="block p-1 uppercase bg-blue-500 hover:bg-blue-600" href={`/${code}${pathName}`}>
-                                {code}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            )}
+
+            <ul className="scale-y-0 group-hover:scale-y-100 transition-transform origin-top absolute top-full right-0 min-w-full max-h-32 overflow-y-auto">
+                {Object.entries(locales).map(([ code, name ]) => (
+                    <li key={code}>
+                        <Link className="block p-1 bg-blue-500 hover:bg-blue-600" href={`/${code}${pathName}`}>
+                            {name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }

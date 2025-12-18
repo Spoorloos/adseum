@@ -1,5 +1,5 @@
 import "server-only";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Translation } from "@/translations/translation";
 
 export const localeCodes = ["en", "nl"] as const;
