@@ -54,7 +54,6 @@ async function deleteUserAction(userId: string) {
 
 export default async function UsersPage() {
     const users = await prisma.user.findMany();
-    const currentUser = await getUser();
     const translations = await getTranslations(await getLocaleCode());
 
     return (
@@ -78,7 +77,6 @@ export default async function UsersPage() {
                         controls: (
                             <div className="flex gap-2">
                                 <DeleteUserModal action={deleteUserAction.bind(undefined, user.id)} />
-                                {/*<EditUserModal email={currentUser?.email ?? ""} />*/}
                             </div>
                         )
                     }))

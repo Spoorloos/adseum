@@ -35,10 +35,14 @@ async function UpdateTranslationAction(_: string | undefined, formData: FormData
     return undefined;
 }
 
-export default async function Page() {
+type PageProps = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function Page({ searchParams }: PageProps) {
     const translations = await getTranslations(await getLocaleCode());
     const languageCodes = await getLocaleCodes();
-    const translationKeys = await prisma.translationKey.findMany({
+    let translationKeys = await prisma.translationKey.findMany({
         select: {
             key: true,
             description: true,
@@ -64,9 +68,27 @@ export default async function Page() {
         }
     }))?.code;
 
+    const query = (await searchParams).query?.toString().toLowerCase();
+    if (query) {
+        translationKeys = translationKeys.filter((key) => key.key.toLowerCase().includes(query));
+    }
+
     return (
         <main className="p-4 space-y-4">
             <h1 className="text-3xl font-bold">{translations["admin.content.text"]}</h1>
+            <form className="flex gap-2">
+                <input
+                    className="outline-none p-1 border border-zinc-200 hover:bg-zinc-100"
+                    type="text"
+                    name="query"
+                    defaultValue={query ?? ""}
+                    placeholder={translations["admin.content.searchPlaceholder"]}
+                />
+                <button
+                    className="outline-none p-1 border border-zinc-200 hover:bg-zinc-100 cursor-pointer"
+                    type="submit"
+                >{translations["admin.content.searchButton"]}</button>
+            </form>
             <CustomTable
                 columns={[
                     { key: "key", name: translations["admin.content.key"] },
@@ -85,7 +107,9 @@ export default async function Page() {
                             </div>
                         ),
                         description: key.description,
-                        default: key.translations.find((v) => v.language.isDefault)?.value,
+                        default: (
+                            <p className="line-clamp-3 max-w-sm">{key.translations.find((v) => v.language.isDefault)?.value}</p>
+                        ),
                         controls: (
                             <div className="flex gap-2">
                                 <EditTranslationModal
