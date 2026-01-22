@@ -3,10 +3,10 @@ import Link from "next/link";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import HeaderLink from "@/components/HeaderLink";
 import HeroLogo from "../HeroLogo";
-import { getTranslations } from "@/lib/localization";
+import { getLocaleCode, getTranslations } from "@/lib/localization";
 
 export default async function MainSection() {
-    const translations = await getTranslations();
+    const translations = await getTranslations(await getLocaleCode());
 
     return (
         <section className="p-8 md:p-12 lg:p-16 min-h-full flex flex-col snap-start" id="hero-section">

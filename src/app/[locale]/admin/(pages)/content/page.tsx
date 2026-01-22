@@ -1,6 +1,6 @@
 import CustomTable from "@/components/CustomTable";
 import EditTranslationModal from "@/components/modals/EditTranslationModal";
-import { getLocaleCodes, getTranslations } from "@/lib/localization"
+import { getLocaleCode, getLocaleCodes, getTranslations } from "@/lib/localization"
 import { prisma } from "@/lib/prisma";
 import { TriangleAlert } from "lucide-react";
 
@@ -36,7 +36,7 @@ async function UpdateTranslationAction(_: string | undefined, formData: FormData
 }
 
 export default async function Page() {
-    const translations = await getTranslations();
+    const translations = await getTranslations(await getLocaleCode());
     const languageCodes = await getLocaleCodes();
     const translationKeys = await prisma.translationKey.findMany({
         select: {

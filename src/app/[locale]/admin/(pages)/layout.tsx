@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getTranslations } from "@/lib/localization";
+import { getLocaleCode, getTranslations } from "@/lib/localization";
 import HeaderLink from "@/components/HeaderLink";
 
 async function logOutAction() {
@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: React.PropsWithChildren)
         redirect("/admin");
     }
 
-    const translations = await getTranslations();
+    const translations = await getTranslations(await getLocaleCode());
 
     return (
         <div className="h-full flex">

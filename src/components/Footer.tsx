@@ -2,10 +2,10 @@ import logoImg from "@/assets/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
-import { getTranslations } from "@/lib/localization";
+import { getLocaleCode, getTranslations } from "@/lib/localization";
 
 export default async function Footer() {
-    const translations = await getTranslations();
+    const translations = await getTranslations(await getLocaleCode());
 
     return (
         <footer className="flex-wrap gap-16 items-center bg-linear-to-br from-pink-600 to-pink-500 text-white p-8 flex justify-around">

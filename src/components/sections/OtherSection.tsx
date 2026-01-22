@@ -1,10 +1,10 @@
-import { getTranslations } from "@/lib/localization";
+import { getLocaleCode, getTranslations } from "@/lib/localization";
 import placeholderImg from "@/assets/placeholder.png";
 import Image from "next/image";
 import InfiniteScroller from "../InfiniteScroller";
 
 export default async function OtherSection() {
-    const translations = await getTranslations();
+    const translations = await getTranslations(await getLocaleCode());
 
     return (
         <div className="p-16 min-h-full snap-start flex flex-col gap-32" id="other-section">
@@ -17,7 +17,7 @@ export default async function OtherSection() {
             </section>
             <section className="text-center flex flex-col gap-8 items-center">
                 <h2 className="text-5xl font-semibold tracking-widest uppercase">{translations["home.artwork.heading"]}</h2>
-                <InfiniteScroller>
+                <InfiniteScroller speed="1s">
                     <Image className="size-64 object-cover"src={placeholderImg} alt="Placeholder"/>
                     <Image className="size-64 object-cover"src={placeholderImg} alt="Placeholder"/>
                     <Image className="size-64 object-cover"src={placeholderImg} alt="Placeholder"/>

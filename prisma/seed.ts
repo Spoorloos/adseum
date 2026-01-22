@@ -50,6 +50,9 @@ async function main() {
             { key: "admin.users.table.id", description: "" },
             { key: "admin.users.table.email", description: "" },
             { key: "admin.users.table.createdAt", description: "" },
+            { key: "admin.users.table.createdAt", description: "" },
+            { key: "admin.users.table.createdAt", description: "" },
+            { key: "admin.users.table.createdAt", description: "" },
         ],
         skipDuplicates: true,
     });

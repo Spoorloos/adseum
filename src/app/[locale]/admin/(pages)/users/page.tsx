@@ -6,7 +6,7 @@ import { createUser, deleteUser, getUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { getTranslations } from "@/lib/localization";
+import { getLocaleCode, getTranslations } from "@/lib/localization";
 
 const registerSchema = z.object({
     email: z.email({ error: "Invalid email format" })
@@ -55,7 +55,7 @@ async function deleteUserAction(userId: string) {
 export default async function UsersPage() {
     const users = await prisma.user.findMany();
     const currentUser = await getUser();
-    const translations = await getTranslations();
+    const translations = await getTranslations(await getLocaleCode());
 
     return (
         <main className="p-4 space-y-4">

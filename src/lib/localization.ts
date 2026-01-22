@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { unstable_cache } from "next/cache";
 
-export async function queryLanguage(...codes: (string | undefined)[]) {
+export const queryLanguage = unstable_cache(async (...codes: (string | undefined)[]) => {
     for (const code of codes) {
         if (code === undefined) continue;
 
@@ -17,7 +18,9 @@ export async function queryLanguage(...codes: (string | undefined)[]) {
     return (await prisma.language.findFirst({
         where: { isDefault: true }
     }))!;
-}
+}, [], {
+    revalidate: 1 * 60 * 60,
+});
 
 export async function getLocaleCode() {
     const localeCode = (await cookies()).get("locale")?.value;
@@ -26,9 +29,7 @@ export async function getLocaleCode() {
     return language.code;
 }
 
-export async function getTranslations(localeCode?: string) {
-    localeCode ??= await getLocaleCode();
-
+export const getTranslations = unstable_cache(async (localeCode: string) => {
     const translations = await prisma.translation.findMany({
         where: {
             languageCode: localeCode,
@@ -40,11 +41,13 @@ export async function getTranslations(localeCode?: string) {
     });
 
     return Object.fromEntries(
-        translations.map(translation => [ translation.key, translation.value ])
+        translations.map(translation => [translation.key, translation.value])
     );
-}
+}, [], {
+    revalidate: 1 * 60 * 60,
+});
 
-export async function getLocaleCodes() {
+export const getLocaleCodes = unstable_cache(async () => {
     const languages = await prisma.language.findMany({
         select: {
             code: true,
@@ -55,4 +58,6 @@ export async function getLocaleCodes() {
     return Object.fromEntries(
         languages.map(lang => [lang.code, lang.name])
     );
-}
+}, [], {
+    revalidate: 1 * 60 * 60,
+});
