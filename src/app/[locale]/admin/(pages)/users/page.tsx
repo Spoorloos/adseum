@@ -59,15 +59,15 @@ export default async function UsersPage() {
 
     return (
         <main className="p-4 space-y-4">
-            <h1 className="text-3xl font-bold">{translations.admin.users.title}</h1>
+            <h1 className="text-3xl font-bold">{translations["admin.users.title"]}</h1>
             <div className="space-x-4">
                 <CreateUserModal action={createUserAction}/>
             </div>
             <CustomTable
                 columns={[
-                    { key: "id", name: translations.admin.users.table.id },
-                    { key: "email", name: translations.admin.users.table.email },
-                    { key: "createdAt", name: translations.admin.users.table.createdAt },
+                    { key: "id", name: translations["admin.users.table.id"] },
+                    { key: "email", name: translations["admin.users.table.email"] },
+                    { key: "createdAt", name: translations["admin.users.table.createdAt"] },
                     { key: "controls", name: "" },
                 ]}
                 rows={

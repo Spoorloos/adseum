@@ -1,5 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { localeCodes, defaultLocale } from "@/lib/localization";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sha256 } from "@/lib/utils";
 import {
@@ -8,27 +7,27 @@ import {
     createAccessToken,
     decodeAccessToken
 } from "@/lib/auth";
+import { queryLanguage } from "./lib/localization";
 
-const localeRegex = new RegExp(`^\/(${localeCodes.join("|")})(\/.*)?$`);
+const localeRegex = /^\/([^\/]+)(\/.*)?$/;
 
 async function localizationProxy(request: NextRequest) {
     const pathName = request.nextUrl.pathname;
-    const matchResult = pathName.match(localeRegex);
+    const [, localeCode] = pathName.match(localeRegex) ?? [];
 
-    if (!matchResult) {
-        // If the url does not match /[locale], redirect to /[locale]
-        const localeCode = request.cookies.get("locale")?.value ?? defaultLocale;
+    const language = await queryLanguage(
+        localeCode,
+        request.cookies.get("locale")?.value
+    );
 
+    if (localeCode !== language.code) {
         return NextResponse.redirect(
-            new URL(`/${localeCode}${pathName}`, request.url)
+            new URL(`/${language.code}${pathName ?? ""}`, request.url)
         );
     }
 
     const response = NextResponse.next();
-    const [, localeCode] = matchResult;
-
-    response.cookies.set("locale", localeCode);
-
+    response.cookies.set("locale", language.code);
     return response;
 }
 

@@ -42,7 +42,7 @@ async function loginAction(_: string | undefined, formData: FormData) {
                 sameSite: "strict",
             });
 
-            redirect("/admin/page");
+            redirect("/admin/content");
         } catch (err) {
             if (err instanceof Error) {
                 return err.message;
@@ -55,7 +55,7 @@ async function loginAction(_: string | undefined, formData: FormData) {
 
 export default async function AdminLogin() {
     if (await isLoggedIn()) {
-        redirect("/admin/page");
+        redirect("/admin/content");
     }
 
     return (

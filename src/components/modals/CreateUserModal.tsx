@@ -2,7 +2,7 @@
 
 import { useState, useActionState, type FormEvent } from "react";
 import { LoaderCircle } from "lucide-react";
-import { useTranslations } from "../TranslationProvider";
+import { useTranslations } from "@/components/contexts/TranslationContext";
 import Modal from "@/components/modals/Modal";
 
 type CreateUserModalProps = {
@@ -37,29 +37,29 @@ export default function CreateUserModal({ action }: CreateUserModalProps) {
                 className="p-1 border border-zinc-200 hover:bg-zinc-100 cursor-pointer"
                 onClick={() => setOpen(x => !x)}
             >
-                {translations.admin.users.createUser.button}
+                {translations["admin.users.createUser.button"]}
             </button>
 
             <Modal
                 open={open}
                 setOpen={setOpen}
-                header={translations.admin.users.createUser.title}
+                header={translations["admin.users.createUser.title"]}
                 body={(
                     <form className="contents" onSubmit={onFormSubmit}>
                         <div>
-                            <label htmlFor="email-field">{translations.admin.users.createUser.email}</label>
+                            <label htmlFor="email-field">{translations["admin.users.createUser.email"]}</label>
                             <input className="outline-none border border-zinc-200 block w-full" type="email" id="email-field" name="email" onChange={(x) => setEmail(x.target.value)} />
                         </div>
                         <div>
-                            <label htmlFor="confirm-email-field">{translations.admin.users.createUser.confirmEmail}</label>
+                            <label htmlFor="confirm-email-field">{translations["admin.users.createUser.confirmEmail"]}</label>
                             <input className={`outline-none block w-full ${emailEqual ? "border border-zinc-200 " : "border-2 border-red-500"}`} type="email" id="confirm-email-field" onChange={(x) => setConfirmEmail(x.target.value)} />
                         </div>
                         <div>
-                            <label htmlFor="password-field">{translations.admin.users.createUser.password}</label>
+                            <label htmlFor="password-field">{translations["admin.users.createUser.password"]}</label>
                             <input className="outline-none border border-zinc-200 block w-full" type="password" id="password-field" name="password" onChange={(x) => setPassword(x.target.value)} />
                         </div>
                         <div>
-                            <label htmlFor="confirm-password-field">{translations.admin.users.createUser.confirmPassword}</label>
+                            <label htmlFor="confirm-password-field">{translations["admin.users.createUser.confirmPassword"]}</label>
                             <input className={`outline-none block w-full ${passwordEqual ? "border border-zinc-200" : "border-2 border-red-500"}`} type="password" id="confirm-password-field" onChange={(x) => setConfirmPassword(x.target.value)} />
                         </div>
                         <button
@@ -68,7 +68,7 @@ export default function CreateUserModal({ action }: CreateUserModalProps) {
                             type="submit"
                         >
                             {isPending && <LoaderCircle className="animate-spin size-4"/>}
-                            {translations.admin.users.createUser.action}
+                            {translations["admin.users.createUser.action"]}
                         </button>
                         {error !== undefined && (
                             <strong className="text-red-500 font-bold">{error}</strong>

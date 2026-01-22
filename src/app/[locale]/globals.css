@@ -2,4 +2,20 @@
 
 @theme {
     --font-inter: var(--font-inter), system-ui, sans-serif;
+    --animate-heart-grow: heart-grow 5s both infinite;
+
+    @keyframes heart-grow {
+        0% { transform: scale(100%); }
+        5% { transform: scale(0%); }
+        10% { transform: scale(120%); }
+        20% { transform: scale(100%); }
+        30% { transform: scale(110%); }
+        40% { transform: scale(100%); }
+        50% { transform: scale(110%); }
+        60% { transform: scale(100%); }
+        70% { transform: scale(110%); }
+        80% { transform: scale(100%); }
+        90% { transform: scale(110%); }
+        100% { transform: scale(100%); }
+    }
 }

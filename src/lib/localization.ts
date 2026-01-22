@@ -1,28 +1,58 @@
-import "server-only";
-import { cookies, headers } from "next/headers";
-import { Translation } from "@/translations/translation";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
 
-export const localeCodes = ["en", "nl"] as const;
-export const defaultLocale: Locale = "en";
+export async function queryLanguage(...codes: (string | undefined)[]) {
+    for (const code of codes) {
+        if (code === undefined) continue;
 
-type Locale = (typeof localeCodes)[number];
+        const lang = await prisma.language.findUnique({
+            where: { code }
+        });
 
-export function isValidLocale(data: string): data is Locale {
-    return localeCodes.includes(data as any);
+        if (lang) {
+            return lang;
+        }
+    }
+
+    return (await prisma.language.findFirst({
+        where: { isDefault: true }
+    }))!;
 }
 
 export async function getLocaleCode() {
-    const locale = (await cookies()).get("locale")?.value;
+    const localeCode = (await cookies()).get("locale")?.value;
+    const language = await queryLanguage(localeCode);
 
-    if (locale === undefined || !isValidLocale(locale)) {
-        return defaultLocale;
-    }
-
-    return locale;
+    return language.code;
 }
 
-export async function getTranslations(locale?: Locale) {
-    locale ??= await getLocaleCode();
+export async function getTranslations(localeCode?: string) {
+    localeCode ??= await getLocaleCode();
 
-    return (await import(`@/translations/${locale}.ts`)).default as Translation;
+    const translations = await prisma.translation.findMany({
+        where: {
+            languageCode: localeCode,
+        },
+        select: {
+            key: true,
+            value: true,
+        }
+    });
+
+    return Object.fromEntries(
+        translations.map(translation => [ translation.key, translation.value ])
+    );
+}
+
+export async function getLocaleCodes() {
+    const languages = await prisma.language.findMany({
+        select: {
+            code: true,
+            name: true,
+        }
+    });
+
+    return Object.fromEntries(
+        languages.map(lang => [lang.code, lang.name])
+    );
 }

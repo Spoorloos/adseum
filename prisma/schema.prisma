@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-    id        String   @id @default(uuid())
-    email     String   @unique
+    id        String    @id @default(uuid())
+    email     String    @unique
     password  String
     sessions  Session[]
-    createdAt DateTime @default(now())
+    createdAt DateTime  @default(now())
+    updatedAt DateTime? @updatedAt
 }
 
 model Session {
@@ -22,4 +23,27 @@ model Session {
     userId    String
     userAgent String?
     createdAt DateTime @default(now())
+}
+
+model Language {
+    code         String @id
+    name         String
+    isDefault    Boolean @default(false)
+    translations Translation[]
+}
+
+model TranslationKey {
+    key          String @id
+    description  String?
+    translations Translation[]
+}
+
+model Translation {
+    key          String
+    keyRef       TranslationKey @relation(fields: [key], references: [key])
+    languageCode String
+    language     Language @relation(fields: [languageCode], references: [code])
+    value        String
+
+    @@id([ key, languageCode ])
 }

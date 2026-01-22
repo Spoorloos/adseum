@@ -1,30 +1,34 @@
 import Link from "next/link";
+import Image from "next/image";
+import logoImg from "@/assets/logo.svg";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { getUser } from "@/lib/auth";
-import { getTranslations, localeCodes } from "@/lib/localization";
+import { getLocaleCodes } from "@/lib/localization";
+import HeaderLink from "@/components/HeaderLink";
+import MobileNavButton from "@/components/MobileNavButton";
 
 export default async function Header() {
     const user = await getUser();
-
-    const locales = Object.fromEntries(
-        await Promise.all(localeCodes.map(
-            async (code) => [ code, (await getTranslations(code)).name ]
-        ))
-    );
+    const locales = await getLocaleCodes();
 
     return (
-        <header className="bg-black text-white flex justify-between items-center p-4">
+        <header className="flex justify-between items-center p-4 bg-white">
             <Link href="/">
-                <p className="text-xl font-bold">Adseum</p>
+                <Image
+                    className="h-12 w-auto"
+                    src={logoImg}
+                    alt="Logo"
+                    id="header-logo-image"
+                />
             </Link>
-            <div className="flex items-stretch gap-2">
-                <nav>
-                    {user !== null && (
-                        <Link className="block p-2 bg-yellow-500" href="/admin">Admin</Link>
-                    )}
-                </nav>
+            <nav className="flex items-center gap-2 not-md:hidden">
+                <HeaderLink href="#">Artwork</HeaderLink>
+                {user !== null && <HeaderLink href="/admin">Admin</HeaderLink>}
                 <LocaleSwitcher locales={locales} />
-            </div>
+                <HeaderLink variant="secondary" href="/">Shop</HeaderLink>
+                <HeaderLink variant="primary" href="/">Contact</HeaderLink>
+            </nav>
+            <MobileNavButton className="md:hidden"/>
         </header>
     )
 }
