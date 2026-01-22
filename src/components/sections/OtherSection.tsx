@@ -11,7 +11,7 @@ export default async function OtherSection() {
     return (
         <div className="p-16 min-h-full snap-start flex flex-col gap-32" id="other-section">
             <section className="grid auto-rows-auto md:grid-cols-2 gap-8 place-items-center">
-                <Image className="w-full aspect-video object-cover" src={placeholderImg} alt="Placeholder"/>
+                <Image className="w-full aspect-video object-cover" src={placeholderImg} alt="About us"/>
                 <div className="flex flex-col justify-between">
                     <h2 className="text-5xl font-semibold tracking-widest uppercase">{translations["home.aboutUs.heading"]}</h2>
                     <p className="tracking-widest">{translations["home.aboutUs.text"]}</p>
@@ -25,9 +25,9 @@ export default async function OtherSection() {
                     </h2>
                 </Link>
                 <InfiniteScroller speed="10s">
-                    <Link href="/artwork"><Image className="size-64 object-cover" src={placeholderImg} alt="Placeholder"/></Link>
-                    <Link href="/artwork"><Image className="size-64 object-cover" src={placeholderImg} alt="Placeholder"/></Link>
-                    <Link href="/artwork"><Image className="size-64 object-cover" src={placeholderImg} alt="Placeholder"/></Link>
+                    <Link href="/artwork"><Image className="size-64 object-cover" src={placeholderImg} alt="Artwork1"/></Link>
+                    <Link href="/artwork"><Image className="size-64 object-cover" src={placeholderImg} alt="Artwork2"/></Link>
+                    <Link href="/artwork"><Image className="size-64 object-cover" src={placeholderImg} alt="Artwork3"/></Link>
                 </InfiniteScroller>
             </section>
         </div>
