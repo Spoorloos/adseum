@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: React.PropsWithChildren) 
                         <Header />
                         <MobileNavWrapper navOptions={
                             <>
-                                <HeaderLink href="#">Artwork</HeaderLink>
+                                <HeaderLink href="/artwork">Artwork</HeaderLink>
                                 {user !== null && <HeaderLink href="/admin">Admin</HeaderLink>}
                                 <LocaleSwitcher locales={localeCodes} />
                                 <HeaderLink variant="secondary" href="/">Shop</HeaderLink>

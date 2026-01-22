@@ -24,3 +24,7 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
 }
+
+:root:has(#hero-logo.visible) #header-logo-image {
+    @apply opacity-0;
+}

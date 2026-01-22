@@ -15,14 +15,14 @@ export default async function Header() {
         <header className="flex justify-between items-center p-4 bg-white">
             <Link href="/">
                 <Image
-                    className="h-12 w-auto"
+                    className="h-12 w-auto transition-opacity"
                     src={logoImg}
                     alt="Logo"
                     id="header-logo-image"
                 />
             </Link>
             <nav className="flex items-center gap-2 not-md:hidden">
-                <HeaderLink href="#">Artwork</HeaderLink>
+                <HeaderLink href="/artwork">Artwork</HeaderLink>
                 {user !== null && <HeaderLink href="/admin">Admin</HeaderLink>}
                 <LocaleSwitcher locales={locales} />
                 <HeaderLink variant="secondary" href="/">Shop</HeaderLink>

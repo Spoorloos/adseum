@@ -19,16 +19,16 @@ export default async function Footer() {
             <div className="space-y-4">
                 <p className="text-xl uppercase tracking-widest font-semibold"> {translations["footer.getInContact"]}</p>
                 <div className="flex gap-4 justify-center">
-                    <Link href="#">
+                    <Link href="#" aria-label="Instragram">
                         <Instagram className="cursor-pointer hover:scale-105 size-8 text-white/80 hover:text-white transition-all duration-100" />
                     </Link>
-                    <Link href="#">
+                    <Link href="#" aria-label="Twitter">
                         <Twitter className="cursor-pointer hover:scale-105 size-8 text-white/80 hover:text-white transition-all duration-100"/>
                     </Link>
-                    <Link href="#">
+                    <Link href="#" aria-label="Youtube">
                         <Youtube className="cursor-pointer hover:scale-105 size-8 text-white/80 hover:text-white transition-all duration-100" />
                     </Link>
-                    <Link href="#">
+                    <Link href="#" aria-label="Linkedin">
                         <Linkedin className="cursor-pointer hover:scale-105 size-8 text-white/80 hover:text-white transition-all duration-100" />
                     </Link>
                 </div>

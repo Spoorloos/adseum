@@ -9,17 +9,10 @@ export default function HeroLogo() {
 
     useEffect(() => {
         if (!sectionImage.current) return;
-        const headerImage = document.getElementById("header-logo-image");
-        if (!headerImage) return;
 
         const observer = new IntersectionObserver((entries) => {
             for (const { isIntersecting } of entries) {
-                headerImage.animate({
-                    opacity: isIntersecting ? "0%" : "100%",
-                }, {
-                    duration: 100,
-                    fill: "both",
-                })
+                sectionImage.current?.classList.toggle("visible", isIntersecting);
             }
         });
 
@@ -32,6 +25,7 @@ export default function HeroLogo() {
             className="h-32 w-auto"
             src={logoImg}
             alt="Logo"
+            id="hero-logo"
             ref={sectionImage}
         />
     )
