@@ -1,8 +1,7 @@
 import CreateUserModal from "@/components/modals/CreateUserModal";
 import DeleteUserModal from "@/components/modals/DeleteUserModal";
-import EditUserModal from "@/components/modals/EditUserModal";
 import CustomTable from "@/components/CustomTable";
-import { createUser, deleteUser, getUser } from "@/lib/auth";
+import { createUser, deleteUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";

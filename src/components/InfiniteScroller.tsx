@@ -7,18 +7,18 @@ type InfiniteScrollerProps = React.PropsWithChildren & {
 
 export default function InfiniteScroller({ children, speed, direction }: InfiniteScrollerProps) {
     const items = Children.map(children, (item) => (
-        <li>{item}</li>
+        <li className="flex-none">{item}</li>
     ))
 
     return (
-        <div className="overflow-hidden">
-            <div className="relative animate-[infinite-scroll_linear_infinite]" style={{
+        <div className="overflow-hidden max-w-full">
+            <ul className="relative inline-flex gap-4 whitespace-nowrap w-max animate-[infinite-scroll_linear_infinite]" style={{
                 animationDuration: speed ?? "7s",
                 animationDirection: direction ?? "normal",
             }}>
-                <ul className="inline-flex gap-4 pr-4">{items}</ul>
-                <ul className="absolute inline-flex gap-4 w-full">{items}</ul>
-            </div>
+                {items}
+                <ul className="absolute left-[calc(100%+var(--spacing)*4)] inline-flex gap-4 whitespace-nowrap w-max">{items}</ul>
+            </ul>
         </div>
     );
 }
